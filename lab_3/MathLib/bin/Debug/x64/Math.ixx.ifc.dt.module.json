@@ -1,0 +1,9 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "c:\\users\\анна\\downloads\\cpplab5-main\\cpplab5-main\\mathlib\\math.ixx",
+        "ProvidedModule": "Math",
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
