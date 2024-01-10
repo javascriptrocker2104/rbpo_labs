@@ -48,7 +48,6 @@ StackBasedOnArray<T>::StackBasedOnArray(unsigned size) : size(size)
 template <typename T>
 StackBasedOnArray<T>::~StackBasedOnArray()
 {
-    if (size > 0)
         delete[] arr;
 }
 template <typename T>
@@ -69,85 +68,91 @@ StackBasedOnArray<T>::StackBasedOnArray(StackBasedOnArray&& other)
     other.arr = nullptr;
 }
 template <typename T>
-StackBasedOnArray<T>::StackBasedOnArray(std::initializer_list<int> ilist)
-    : arr(new int[ilist.size()]), size(ilist.size())
+StackBasedOnArray<T>::StackBasedOnArray(initializer_list<int> list)
 {
+    delete[] arr;//удалить старый
+    size = list.size();
+    arr = new int[size];
     int i = 0;
-    for (const auto& element : ilist)
-    {
-        arr[i++] = element;
+    for (const int* iter = list.begin(); iter != list.end(); ++iter) {
+        arr[i] = *iter;
+        i++;
     }
 }
 template <typename T>
-int StackBasedOnArray<T>::GetSize() const
-{
+int StackBasedOnArray<T>::GetSize() const {
     return size;
 }
 template <typename T>
-typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::begin()
-{
+typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::begin(){
     return Iterator(arr);
 }
 template <typename T>
-const typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::begin() const
-{
+const typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::begin() const{
     return Iterator(arr);
 }
 template <typename T>
-typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::end()
-{
+typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::end(){
     return Iterator(arr + size);
 }
 template <typename T>
-const typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::end() const
-{
+const typename StackBasedOnArray<T>::Iterator StackBasedOnArray<T>::end() const{
     return Iterator(arr + size);
 }
-const int& StackBasedOnArray<int>::operator[](int index) const
-{
+
+const int& StackBasedOnArray<int>::operator[](int index) const{
+    if (index < 0 || index >= size) {
+        throw out_of_range("Index out of bounds"); // Бросаем исключение, если индекс за пределами массива
+    }
     return arr[index];
+
 }
-int& StackBasedOnArray<int>::operator[](int index)
-{
+int& StackBasedOnArray<int>::operator[](int index){
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of bounds");
+    }
     return arr[index];
+
 }
+
 template <typename T>
 StackBasedOnArray<T>& StackBasedOnArray<T>::operator=(const StackBasedOnArray& other)
 {
-    if (this != &other)
+    if (this == &other)
     {
-        delete[] arr;
-        arr = new int[other.size];
-        size = other.size;
-        for (int i = 0; i < size; ++i)
-        {
-            arr[i] = other.arr[i];
-        }
+        return *this;
+    }
+    delete[] arr;
+    arr = new int[other.size];
+    size = other.size;
+    for (int i = 0; i < size; i++)
+    {
+        arr[i] = other.arr[i];
     }
     return *this;
 }
 template <typename T>
 StackBasedOnArray<T>& StackBasedOnArray<T>::operator=(StackBasedOnArray&& other)
 {
-    if (this != &other)
-    {
-        delete[] arr;
-        arr = other.arr;
-        size = other.size;
-        other.arr = nullptr;
-    }
+    if (this == &other)
+        return *this;
+    delete[] arr;
+    arr = other.arr;
+    size = other.size;
+    other.arr = nullptr;
     return *this;
+
 }
 template <typename T>
 StackBasedOnArray<T>& StackBasedOnArray<T>::operator=(std::initializer_list<int> ilist)
 {
-    delete[] arr;
-    arr = new int[ilist.size()];
+    delete[] arr;//удалить старый
     size = ilist.size();
+    arr = new int[size];
     int i = 0;
-    for (const auto& element : ilist)
-    {
-        arr[i++] = element;
+    for (const int* iter = ilist.begin(); iter != ilist.end(); ++iter) {
+        arr[i] = *iter;
+        i++;
     }
     return *this;
 }
