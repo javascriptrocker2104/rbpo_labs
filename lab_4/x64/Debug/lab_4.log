@@ -1,2 +1,6 @@
 ﻿  main.cpp
+C:\Users\Анна\Downloads\lab_4\main.cpp(73,39): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Анна\Downloads\lab_4\main.cpp(73,5): message : во время компиляции функции-члена класс шаблон "StackBasedOnArray<int>::StackBasedOnArray(std::initializer_list<int>)"
+C:\Users\Анна\Downloads\lab_4\main.cpp(251,38): message : см. первую ссылку на "StackBasedOnArray<int>::StackBasedOnArray" в "main"
+C:\Users\Анна\Downloads\lab_4\main.cpp(106,46): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "StackBasedOnArray<int>"
   lab_4.vcxproj -> C:\Users\Анна\Downloads\lab_4\x64\Debug\lab_4.exe
